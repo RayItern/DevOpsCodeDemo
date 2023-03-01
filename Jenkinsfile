@@ -3,12 +3,12 @@ pipeline{
                 jdk 'myjava'
                 maven 'mymaven'
             }
-            Agent Agent1
+            agent any
             stages{
                 stage('Checkout'){
                     steps{
                 echo 'cloning..'
-                        git ' https://github.com/RayItern/DevOpsCodeDemo.git'
+                        git url: ' https://github.com/RayItern/DevOpsCodeDemo.git'
                     }
                 }
                 stage('compile'){
