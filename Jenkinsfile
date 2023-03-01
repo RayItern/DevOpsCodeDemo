@@ -6,36 +6,41 @@ pipeline{
             agent any
             stages{
                 stage('Checkout'){
+                    agent any
                     steps{
                 echo 'cloning..'
-                        git url: ' https://github.com/RayItern/DevOpsCodeDemo.git'
+                        git url: 'https://github.com/RayItern/DevOpsCodeDemo.git'
                     }
                 }
-                stage('compile'){
-                 agent any            
+                stage('Compile'){
+                    agent {label 'Agent1'}
                     steps{
-                        echo 'compile the code..'
+                        echo 'compiling...'
                         sh 'mvn compile'
                 }
-             }   
+                }
                 stage('CodeReview'){
-                 agent any           
+                    agent {label 'Agent1'}
                     steps{
                     
-                echo 'codeReview..'
+                echo 'codeReview...'
                         sh 'mvn pmd:pmd'
                     }
                 }
                 stage('UnitTest'){
-                 agent any           
+                    agent {label 'Agent1'}
                     steps{
+                    echo 'Testing'
                         sh 'mvn test'
                     }
-               }
-                   
+                    post {
+                    success {
+                        junit 'target/surefire-reports/*.xml'
+                    }
+                }	
+                }
                 stage('Package'){
-                  agent any          
-        
+                    agent any
                     steps{
                         sh 'mvn package'
                     }
