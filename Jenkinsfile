@@ -3,44 +3,35 @@ pipeline{
                 jdk 'myjava'
                 maven 'mymaven'
             }
-            agent any
+            agent (label  'jenkins_slave' )
             stages{
                 stage('Checkout'){
-                    agent any
                     steps{
                 echo 'cloning..'
-                        git url: 'https://github.com/RayItern/DevOpsCodeDemo.git'
+                        git ' https://github.com/RayItern/DevOpsCodeDemo.git'
                     }
                 }
-                stage('Compile'){
-                    agent {label 'Agent1'}
+                stage('compile'){
                     steps{
-                        echo 'compiling...'
+                        echo 'compile the code..'
                         sh 'mvn compile'
                 }
                 }
                 stage('CodeReview'){
-                    agent {label 'Agent1'}
                     steps{
                     
-                echo 'codeReview...'
+                echo 'codeReview..'
                         sh 'mvn pmd:pmd'
                     }
                 }
                 stage('UnitTest'){
-                    agent {label 'Agent1'}
                     steps{
-                    echo 'Testing'
                         sh 'mvn test'
                     }
-                    post {
-                    success {
-                        junit 'target/surefire-reports/*.xml'
-                    }
-                }	
-                }
+            }
+                   
                 stage('Package'){
-                    agent any
+        
                     steps{
                         sh 'mvn package'
                     }
