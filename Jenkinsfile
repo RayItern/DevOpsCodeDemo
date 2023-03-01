@@ -3,7 +3,7 @@ pipeline{
                 jdk 'myjava'
                 maven 'mymaven'
             }
-            Agent (label 'jenkins_slave')
+            Agent Agent1
             stages{
                 stage('Checkout'){
                     steps{
