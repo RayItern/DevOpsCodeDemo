@@ -12,12 +12,14 @@ pipeline{
                     }
                 }
                 stage('compile'){
+                 agent any            
                     steps{
                         echo 'compile the code..'
                         sh 'mvn compile'
                 }
              }   
                 stage('CodeReview'){
+                 agent any           
                     steps{
                     
                 echo 'codeReview..'
@@ -25,12 +27,14 @@ pipeline{
                     }
                 }
                 stage('UnitTest'){
+                 agent any           
                     steps{
                         sh 'mvn test'
                     }
                }
                    
                 stage('Package'){
+                  agent any          
         
                     steps{
                         sh 'mvn package'
