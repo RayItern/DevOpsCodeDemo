@@ -13,12 +13,14 @@ git 'https://github.com/RayItern/DevOpsCodeDemo.git'
 }
 stage('Compile the code')
 {
+agent any  
 steps{
 sh 'mvn compile'
 }
 }
 stage('Code Analysis')
 {
+  agent any
 steps{
 sh 'mvn pmd:pmd'
 }
