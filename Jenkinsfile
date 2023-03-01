@@ -11,12 +11,13 @@ pipeline{
                         git ' https://github.com/RayItern/DevOpsCodeDemo.git'
                     }
                 }
-                stage('compile'){
+                stage('compile the code')
                     steps{
-                        echo 'compile the code..'
                         sh 'mvn compile'
+                                
+                      
                 }
-                }
+              }
                 stage('CodeReview'){
                     steps{
                     
