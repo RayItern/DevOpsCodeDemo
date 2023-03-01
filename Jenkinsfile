@@ -3,7 +3,7 @@ tools{
 jdk 'myjava'
 maven 'mymaven'
 }
-agent (label'jenkins_slave')
+agent any
 stages{
 stage('Clone Repo')
 {
