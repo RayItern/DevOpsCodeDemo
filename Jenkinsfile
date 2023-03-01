@@ -1,28 +1,40 @@
 pipeline{
-    
-    agent any
-    
-
-    
-    stages{
-        
-        stage('Build Code')
-        {
-            steps{
-                sh 'echo "Build Code"'
+            tools{
+                jdk 'myjava'
+                maven 'mymaven'
             }
-        }
-        
-        stage('Release Code'){
-            steps{
-            
+            Agent (label  'jenkins_slave' )
+            stages{
+                stage('Checkout'){
+                    steps{
+                echo 'cloning..'
+                        git ' https://github.com/RayItern/DevOpsCodeDemo.git'
+                    }
+                }
+                stage('compile'){
+                    steps{
+                        echo 'compile the code..'
+                        sh 'mvn compile'
+                }
+             }   
+                stage('CodeReview'){
+                    steps{
+                    
+                echo 'codeReview..'
+                        sh 'mvn pmd:pmd'
+                    }
+                }
+                stage('UnitTest'){
+                    steps{
+                        sh 'mvn test'
+                    }
+               }
                    
-                        echo "relase the code to artifactory"
-                
-               } 
-               
-            }
-                
+                stage('Package'){
+        
+                    steps{
+                        sh 'mvn package'
+                    }
+                }
             }
         }
-   
